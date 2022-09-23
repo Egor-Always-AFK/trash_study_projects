@@ -42,10 +42,10 @@ T maxn(T *array, size_t size)
 
 int main()
 {
-	int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8 , 9 , 10};
+	int arr[6] = {1, 2, 6, 4, 5, 3};
 	cout << maxn(arr);
-	double arr_2[10] = {1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.2};
+	double arr_2[4] = {1.7, 10.8, 1.9, 2.2};
 	cout << "\n" << maxn(arr_2) << "\n";
-	const char* charPtrArray[] = {"str", "very long str", "VERY LONG STR", "short str"};
+	const char* charPtrArray[] = {"hi", "very long str", "idk maybe this very very long str", "sooorry"};
 	cout << maxn(charPtrArray, 4) << "\n";
 }
