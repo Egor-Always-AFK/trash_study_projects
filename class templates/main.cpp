@@ -1,13 +1,7 @@
-#include <iostream>
-#include <iomanip>
-#include <string>
-#include <valarray>
-#include "Wine.h"
+#include "Wine.hpp"
 
-using namespace std;
 
-typedef valarray<int> Arrayint; 
-typedef pair<Arrayint, Arrayint> PairArray;
+
 
 int main()
 {

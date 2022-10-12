@@ -1,8 +1,5 @@
-#include <iostream>
-#include <iomanip>
-#include "Wine.h"
+#include "Wine.hpp"
 
-using namespace std;
 
 Wine::Wine() : label("no name"), Pair(), size() {}
 
@@ -10,8 +7,8 @@ Wine::Wine(const char* label, const int size, const int years[], const int bottl
 {
     this->label = label;
     this->size = size;
-    Pair.first = Arrayint(size);
-    Pair.second = Arrayint(size);
+    Pair.first = Array(size);
+    Pair.second = Array(size);
 
     for (size_t i = 0; i < size; i++)
     {
@@ -25,11 +22,11 @@ Wine::Wine(const char* label, const int size)
 {
     this->label = label;
     this->size = size;
-    Pair.first = Arrayint(size);
-    Pair.second = Arrayint(size);
+    Pair.first = Array(size);
+    Pair.second = Array(size);
 }
 
-Wine::Wine(const char* label, const PairArray& pair)
+Wine::Wine(const char* label, const PairS& pair)
 {
     this->label = label;
     size = pair.first.size();
