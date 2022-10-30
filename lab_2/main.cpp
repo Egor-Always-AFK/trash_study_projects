@@ -82,7 +82,7 @@ int main() {
 		mov ebx, 2
 
 		div ebx
-		dec eax // a/2 - 1
+		dec eax
 
 
 		lea edi, memo[12]
