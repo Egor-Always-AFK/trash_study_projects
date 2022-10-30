@@ -1,177 +1,90 @@
-#include<conio.h>
 #include <iostream>
+#include <conio.h>
+#include <iomanip>
+#include <sstream>
+#include <cstdint>
 
-using namespace std;
+int main()
+{
+	//a = 0x1'527D'27F2; 5'678'901'234
+	//b = 0x1'94A8'1B79; 6'789'012'345;
+	//c = 0x1'D649'BAC0; 7'890'123'456;
+	//d = 0x2'128E'0F87; 8'901'234'567; 
+	//e = 0x2'192D'7B4E; 9'012'345'678;
+	//f = 0x2'5B67'B115; 10'123'456'789;
+	//result = (c*d + 23)/(a/2 - 4*d - 1);
 
-int main() {
-	unsigned long long int a = 5678901234;
-	unsigned long long int c = 7890123456;
-	unsigned long long int d = 8901234567;
-	unsigned int divider = 0;
-	unsigned long long int dividend = 0;
-	long long answer = 0;
-	char memo[144];
-	for (int i = 0; i++; i < 144) {
-		memo[i] = 0;
-	}
+	uint32_t memo;
 
-	_asm {
+	__asm
+	{
 		pushad
 
-		lea edi, c
-		mov ebx, [edi]
-		mov si, [edi + 4]
+		//d*c (ebp:esp)
+		mov edi, 0x1
+		mov esi, 0xD649'BAC0
+		mov ecx, 0x2
+		mov ebx, 0x128E'0F87
+		mov eax, esi
+		mul ebx
+		mov ebp, edx
+		mov esp, eax
+		mov eax, edi
+		mul ebx
+		add esp, eax
+		adc ebp, edx
+		mov eax, esi
+		mul ecx
+		add esp, eax
+		adc ebp, edx
+		mov eax, edi
+		mul ecx
+		add ebp, eax
 
-		bswap esi
+		//c*d + 23(ebp:esp)
+		mov eax, 0x17
+		add esp, eax
+		adc ebp, edx
 
-		lea edi, d
-		mov ecx, [edi]
-		mov si, [edi + 4] 
+		//a/2 (eax)
+		mov edx, 0x1
+		mov eax, 0x527D'27F2
+		mov ecx, 0x2
+		div ecx
+		mov ebx, eax
 
+		//4*d (edi:esi)
+		mov ecx, 0x4
+		mov eax, 0x128E'0F87
+		mov ebx, 0x2
+		mul ecx
+		mov esi, eax
+		mov edi, edx
 		mov eax, ebx
-		mul ecx 
-		
-		lea edi, memo
-		mov [edi], eax 
-		mov [edi + 4], edx 
+		mul ecx
+		add edi, eax
 
-		movzx eax, si
-		mul ebx 
+		//a/2 - 4*d - 1 = (-1)(4*d-a/2 + 1)//4*d-a/2 + 1(edi:esi)
+		mov edx, 0
+		sub esi, eax
+		sbb edi, edx
+		inc esi
+		sbb edi, edx
 
-		push si
-		bswap esi
-		push si
-
-		mov esi, [edi + 4]
-		add esi, eax
-		mov [edi + 4], esi
-		
-		mov [edi + 8], edx
-
-		xor esi, esi
-		pop si 
-
-
-		mov eax, ecx
-		mul esi
-
-		push si 
-
-		mov esi, [edi + 4]
-		add esi, eax 
-		mov [edi + 4], esi
-
-		pop si 
-		xor eax, eax
-		mov ax, si	
-
-		pop si
-		mul si 
-
-		mov esi, [edi + 8]
-		add eax, esi
-		mov [edi + 8], eax
-
-		add [edi], 23
-
-		lea edi, a
-		mov eax, [edi]
-		mov edx, [edi + 4]
-		
-		xor ebx, ebx
-		mov ebx, 2
-
-		div ebx
-		dec eax
-
-
-		lea edi, memo[12]
-		mov [edi], eax 
-
-		lea edi, d
-		mov ecx, [edi] 
-		mov ebx, [edi + 4]
-		
-		mov esi, 4
-		
-		mov eax, ecx 
-		mul esi
-
-		imul ebx, esi
-		
-		mov ecx, eax
-
-
-		lea edi, memo[12]
-		mov eax, [edi]
-
-	
-
-		sub ecx, eax
-		sbb ebx, 0
-
-		
-		mov edx, ebx
-		mov eax, ecx
-		mov esi, 8
+		//(c*d + 23)/(4*d-a/2 + 1) // edi = 0 halyavi radi
+		mov edx, ebp
+		mov eax, esp
 		div esi
 
-		lea edi, divider
-		mov [edi], eax
-		
-
-		lea edi, memo
-		mov eax, [edi]
-		div esi
-		xor eax, 0x80000000
-		mov ecx, eax
-
-
-		mov eax, [edi + 4]
-		imul eax, 0x00000100
-		xor edx, edx
-		div esi
-		
-		mov ebx, eax
-		bswap ecx
-		add cl, bl
-		bswap ecx
-		lea edi, dividend
-		mov [edi], ecx
-
-		mov edi, 0x00000100
-		div edi
-		mov ebx, eax
-
-		lea edi, memo[7]
-		mov eax, [edi]
-		imul eax, 0x00000010
-		xor dl, dl
-		div esi
-		imul eax, 0x00100000
-
-		add ebx, eax
-
-		mov edx, ebx
-		mov eax, ecx
-
-
-		lea edi, divider
-		mov ebx, [edi]
-
-
-		div ebx
-
+		//(c*d + 23)/(4*d-a/2 + 1)*(-1)
 		neg eax
-		cdq
-	
-		lea edi, answer
-		mov [edi], eax
-		mov [edi + 4], edx
 
+		lea ecx, memo
+		mov [ecx], eax
+		// mov dword ptr[result], eax
 		popad
 	}
 
-	cout << "Answer is: " << answer;
+	std::cout << memo;
 	return 0;
 }
