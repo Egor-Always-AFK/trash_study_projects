@@ -2,6 +2,10 @@
 
 Cd::Cd(const Cd &d)
 {
+	if (performas)
+		delete[] performas;
+	if (label)
+		delete[] label;
 	performas = new char[ft_strlen(d.performas) + 1];
 	performas = ft_strcpy(d.performas, performas);
 	label = new char[ft_strlen(d.label) + 1];
@@ -32,6 +36,10 @@ Cd& Cd::operator=(const Cd &d)
 {
 	if (this == &d)
 		return(*this);
+	if (performas)
+		delete[] performas;
+	if (label)
+		delete[] label;
 	performas = new char[ft_strlen(d.performas) + 1];
 	performas = ft_strcpy(d.performas, performas);
 	label = new char[ft_strlen(d.label) + 1];

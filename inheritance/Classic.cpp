@@ -8,6 +8,8 @@ Classic::Classic() : Cd()
 
 Classic::Classic(const Classic &c) : Cd(c)
 {
+	if (idk)
+		delete[] idk;
 	this->idk = new char[ft_strlen(c.idk) + 1];
 	this->idk = ft_strcpy(c.idk, this->idk);
 }
@@ -22,6 +24,8 @@ Classic& Classic::operator=(const Classic& c)
 {
 	if (this == &c)
 		return (*this);
+	if (idk)
+		delete[] idk;
 	idk = new char[ft_strlen(c.idk) + 1];
 	idk = ft_strcpy(c.idk, idk);
 

@@ -1,4 +1,4 @@
-NAME = slava_loh
+NAME = cdDvd
 
 CC = clang++
 
