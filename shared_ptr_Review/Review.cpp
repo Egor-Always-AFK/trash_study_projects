@@ -22,3 +22,19 @@ Review &Review::operator=(const Review &src)
 
 	return (*this);
 }
+
+std::ostream &operator<<(std::ostream &out, Review &src)
+{
+	out << "_name: " << src._name << "\n_rating: " << src._rating;
+	return (out);
+}
+
+std::string Review::getName()
+{
+	return (_name);
+}
+
+std::size_t Review::getRating()
+{
+	return (_rating);
+}

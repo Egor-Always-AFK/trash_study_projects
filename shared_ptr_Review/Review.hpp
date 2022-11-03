@@ -2,6 +2,10 @@
 # define REVIEW_HPP
 
 #include <iostream>
+#include <vector>
+#include <memory>
+#include <algorithm>
+
 
 class Review
 {
@@ -17,6 +21,11 @@ class Review
 		~Review();
 
 		Review &operator=(const Review &src);
+		friend std::ostream &operator<<(std::ostream &out, Review &src);
+
+
+		std::string getName();
+		std::size_t getRating();
 };
 
 #endif
