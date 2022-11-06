@@ -60,7 +60,6 @@ int main()
 		adc ebx, edx
 		push ebx //h
 		push ecx //l
-<<<<<<< HEAD
 		lea eax, tmp1
 		mov[eax], ebx
 		lea eax, tmp2
@@ -70,13 +69,11 @@ int main()
 		mov edx, 0x1
 		mov eax, 0x56A735
 		mov edi, 2
-=======
 
 		//a/2 (esi)+
 		mov edx, 0x1
 		mov eax, 0x527D'27F2
 		mov edi, 0x2
->>>>>>> 400d37a3a500d27c6fe502dfdfcdcd93a424d507
 		div edi
 		mov esi, eax
 
