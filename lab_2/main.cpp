@@ -9,7 +9,7 @@ int main()
 	//e = 0x2'192D'7B4E; 9'012'345'678;
 	//f = 0x2'5B67'B115; 10'123'456'789;
 	//result = (c*d + 23)/(a/2 - 4*d - 1);
-	long long memo = 0;
+	unsigned long long memo = 0;
 
 	__asm
 	{
@@ -51,7 +51,7 @@ int main()
 		mov ebx, edx
 		mov ecx, eax
 
-		
+
 
 		//c*d + 23(ebx:ecx)+
 		mov eax, 0x17
@@ -67,7 +67,7 @@ int main()
 		mov edi, 0x2
 		div edi
 		mov esi, eax
-		
+
 		//4*d (edi:esi)+
 		mov ecx, 0x4
 		mov eax, 0x128E'0F87
@@ -79,14 +79,14 @@ int main()
 		mul ecx
 		add edi, eax
 
-		//a/2 - 4*d - 1 = (-1)(4*d-a/2 + 1)//4*d-a/2 + 1(edi:esi)+
+		//4*d-a/2 + 1(edi:esi)+
 		mov edx, 0
 		sub esi, eax
 		sbb edi, edx
 		inc esi
 		sbb edi, edx
 
-		//(c*d + 23)/(4*d-a/2 + 1) // edi = 0 halyavi radi +
+		//(c*d + 23)/(4*d-a/2 + 1) 
 		mov eax, 0
 		mov edx, 0
 		pop eax //l
