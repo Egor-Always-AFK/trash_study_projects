@@ -7,6 +7,11 @@
 #include <algorithm>
 
 
+#define FALSE 0
+#define TRUE 1
+#define NAME 0
+#define RATING 1
+
 class Review
 {
 	private:
