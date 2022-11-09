@@ -25,7 +25,7 @@ Review &Review::operator=(const Review &src)
 
 std::ostream &operator<<(std::ostream &out, Review &src)
 {
-	out << "_name: " << src._name << "\n_rating: " << src._rating;
+	out << "name: " << src._name << "\nrating: " << src._rating;
 	return (out);
 }
 

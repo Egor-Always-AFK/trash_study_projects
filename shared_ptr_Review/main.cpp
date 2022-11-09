@@ -23,67 +23,36 @@ bool ft_find(std::vector<std::shared_ptr<Review>> min, std::vector<std::shared_p
 	return (TRUE);
 }
 
-// std::vector<std::shared_ptr<Review>> ft_find_min()
-// {
-
-// }
-
-std::vector<std::shared_ptr<Review>> sorAtName(std::vector<std::shared_ptr<Review>> vec)
+void sorAtName(std::vector<std::shared_ptr<Review>> vec)
 {
-	std::vector<std::shared_ptr<Review>>::const_iterator end = vec.end();
-	std::vector<std::shared_ptr<Review>> out;
-	std::vector<std::shared_ptr<Review>>::iterator min;
-	for (std::vector<std::shared_ptr<Review>>::iterator start = vec.begin(); start != end; start++)
-	{
-		min = vec.begin();
-		for (std::vector<std::shared_ptr<Review>>::iterator tmp = vec.begin(); tmp != end; tmp++)
-		{
-			if ((**min).getName() < (**tmp).getName() && (ft_find(out, tmp, NAME) == FALSE))
-				min = tmp;
-		}
-		out.push_back(*min);
-	}
-
-	return out;
+	std::sort(vec.begin(), vec.end(), [](std::shared_ptr<Review> reviewPtr_1, std::shared_ptr<Review> reviewPtr_2) {
+            return reviewPtr_1.get()->getName().compare(reviewPtr_2.get()->getName()) < 0;
+    });
+	std::cout << "Sorted vector(by name):\n";
+	for (std::vector<std::shared_ptr<Review>>::iterator start = vec.begin(); start != vec.end(); start++)
+		std::cout << (**start) << "\n-----\n";
 }
 
-std::vector<std::shared_ptr<Review>> sortAtRating(std::vector<std::shared_ptr<Review>> vec)
+void sortAtRating(std::vector<std::shared_ptr<Review>> vec)
 {
-	std::vector<std::shared_ptr<Review>>::const_iterator end = vec.end();
-	std::vector<std::shared_ptr<Review>> out;
-	std::vector<std::shared_ptr<Review>>::iterator min;
-	for (std::vector<std::shared_ptr<Review>>::iterator start = vec.begin(); start != end; start++)
-	{
-		min = vec.begin();
-		for (std::vector<std::shared_ptr<Review>>::iterator tmp = vec.begin(); tmp != end; tmp++)
-		{
-			if (((**min).getRating() < (**tmp).getRating()) && (ft_find(out, tmp, RATING) == FALSE))
-				min = tmp;
-		}
-		out.push_back(*min);
-	}
-	
-	std::cout << "-----\nSorted vector(by rating):\n";
-	for (std::vector<std::shared_ptr<Review>>::iterator start = out.begin(); start != out.end(); start++)
-		std::cout << (**start) << "\n";
-	return out;
+	std::sort(vec.begin(), vec.end(), [](std::shared_ptr<Review> reviewPtr_1, std::shared_ptr<Review> reviewPtr_2) {
+            return reviewPtr_1.get()->getRating() < reviewPtr_2.get()->getRating();
+    });
+	std::cout << "\nSorted vector(by rating):\n";
+	for (std::vector<std::shared_ptr<Review>>::iterator start = vec.begin(); start != vec.end(); start++)
+		std::cout << (**start) << "\n-----\n";
 }
 
 int main()
 {
-	// std::vector<std::shared_ptr Review> vector = {Review(), Review("idk", 100), Review("wow", 2)};
 	std::vector<std::shared_ptr<Review>> vec;
 	vec.push_back(std::make_shared<Review>());
-	vec.push_back(std::make_shared<Review>("test0", 100));
-	vec.push_back(std::make_shared<Review>("test1", 2));
-	vec.push_back(std::make_shared<Review>("test1", 123));
+	vec.push_back(std::make_shared<Review>("3", 123));
+	vec.push_back(std::make_shared<Review>("1", 100));
+	vec.push_back(std::make_shared<Review>("2", 2));
 
-	vec = sorAtName(vec);
-	std::cout << "Sorted vector(by name):\n";
-	for (std::vector<std::shared_ptr<Review>>::iterator start = vec.begin(); start != vec.end(); start++)
-		std::cout << (**start) << "\n";
-	
-	vec = sortAtRating(vec);
+	sorAtName(vec);
+	sortAtRating(vec);
 
 	return (0);
 }

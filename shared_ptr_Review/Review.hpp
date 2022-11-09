@@ -33,4 +33,5 @@ class Review
 		std::size_t getRating();
 };
 
+
 #endif
