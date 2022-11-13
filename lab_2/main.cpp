@@ -67,49 +67,51 @@ int main()
 		mov[esi], ecx // младшие разряды в Memo[6]
 
 		//c*d
-		lea esi, Memo[8]
+		// сначала нужно избавится от нулей которые получились при сдвиге
+		lea esi, Memo[8] // Memo[1] = Memo[8] = d
 		mov eax, [esi]
 		mov ecx, 10h
-		div ecx
+		div ecx // d649bac0/10 = 0d649bac
 		mov ebx, [esi + 4]
 		xchg eax, ebx
 		mov ecx, 10000000h
-		mul ecx
-		add eax, ebx
+		mul ecx // 00000001*10000000 = 10000000
+		add eax, ebx // 10000000 + 0d649bac = 1d649bac
 		xchg eax, ebx
-		lea esi, Memo[16]
+		lea esi, Memo[16] // Memo[2] = Memo[16] = c
 		mov eax, [esi + 4]
-		mul ecx
-		mul ebx
+		mul ecx // 00000002 * 10000000 = 20000000
+		mul ebx // 20000000 * 1d649bac = eax : edx = 80000000 : 03ac9375 
 		mov ecx, 10h
 		xchg eax, edx
 		xchg edx, edi
-		mul ecx
+		mul ecx // 03ac9375 * 10 = 3ac93750
 		mov ecx, 10000000h
 		xchg eax, edi
-		div ecx
-		add eax, edi
-		mov edi, eax
-		lea esi, Memo[16]
-		mov eax, [esi]
-		mul ebx
-		mov ebx, eax
-		xchg eax, edx
-		add eax, edi
-		mov ecx, 10h
-		mul ecx
+		div ecx // 80000000/10000000 = 00000008
+		//от нулей избавились можем работать дальше умножаем
+		add eax, edi // старшие разряды складываем 3ac93750 + 00000008 = 3ac93758
+		mov edi, eax // edi для старших разрядов 
+		lea esi, Memo[16] // Memo[2] = Memo[16] = c
+		mov eax, [esi] // младшие разряды c
+		mul ebx // 128e0f87 * 1d649bac = eax : edx = d6952bb4 : 02216288
+		mov ebx, eax // eax => ebx (eax - произведение младших разрядов)
+		xchg eax, edx // eax <=> edx
+		add eax, edi // 02216288 + 3ac937558 = 3cea99e0
+		mov ecx, 10h 
+		mul ecx // 3cea99e0 * 10 = cea99e00
 		xchg eax, ebx
-		mul ecx
-		add ebx, edx
+		mul ecx // d6952bb4 * 10 = 6952bb40
+		add ebx, edx // cea99e00 + 0000000d = cea99e0d
 		xchg edx, ebx
 		lea esi, Memo[56]
-		mov[esi], edx
+		mov[esi], edx // результат произведения в Memo[7]
 
 		//c*d + 23
 		mov ecx, 23
 		add eax, ecx
 		lea esi, Memo[64]
-		mov[esi], eax
+		mov[esi], eax // результат сложения в Memo[8]
 
 		//(c*d + 23)/(a/2 - d*4 - 1)
 		lea esi, Memo[56]
