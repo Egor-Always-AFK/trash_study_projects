@@ -1,116 +1,142 @@
 #include<iostream>
+#include<conio.h>
+#include<iomanip>
+#include<sstream>
 
+using namespace std;
+const int DataSize = 144;
+
+std::string IntToHex(int n)
+{
+	std::stringstream ss;
+	ss << std::hex << n;
+	return ss.str();
+}
 int main()
 {
-	//a = 0x1'527D'27F2; 5'678'901'234
-	//b = 0x1'94A8'1B79; 6'789'012'345;
-	//c = 0x1'D649'BAC0; 7'890'123'456;
-	//d = 0x2'128E'0F87; 8'901'234'567; 
-	//e = 0x2'192D'7B4E; 9'012'345'678;
-	//f = 0x2'5B67'B115; 10'123'456'789;
-	//result = (c*d + 23)/(a/2 - 4*d - 1);
-	unsigned long long memo = 0;
-
-	__asm
-	{
+	__int64 Memo[DataSize];
+	for (int i = 0; i++; i < DataSize) {
+		Memo[i] = NULL;
+	}
+	Memo[0] = 5678901234; //a 0x1'527D'27F2
+	Memo[1] = 7890123456; //c 0x1'D649'BAC0
+	Memo[2] = 8901234567; //d 0x2'128E'0F87
+	__asm {
 		pushad
 
-		//d*c (ebx:ecx)+
-		mov edi, 0x1
-		mov esi, 0x7864CB
-		mov ecx, 0x2
-		mov ebx, 0x87D272
-		mov eax, esi
-		mul ebx //esi ebx
-		push edx // h
-		push eax // l
-		mov eax, edi
-		mul ebx //edi ebx
-		push edx //h
-		push eax //l
-		mov eax, esi
-		mul ecx //esi ecx
-		push edx //h
-		push eax // l
-		mov eax, edi
-		mul ecx //edi ecx
-		//summ edx:eax
-		mov edx, eax
-		pop ebx //esi ecx l
-		pop ecx //esi ecx h
-		add eax, ebx
-		adc edx, ecx
-		pop ebx //edi ebx l
-		pop ecx //edi ebx h
-		add eax, ebx
-		adc edx, ecx
-		pop ebx //esi ebx l
-		pop ecx //esi ebx h
-		add eax, ebx
-		adc edx, ecx
-		mov ebx, edx
-		mov ecx, eax
+		// Memo[0] == Memo[0]
+		// Memo[1] == Memo[8]
+		// Memo[2] == Memo[16]
+		// Memo[3] == Memo[24]
+		// итд Memo[n] == Memo [8 * n]
 
+		//a/2 пара eax:ebx
+		lea esi, Memo[0]
+		mov eax, [esi] // eax = 527D'27F2
+		mov edx, [esi + 4] // ebx = 0x1
+		mov ecx, 2
+		div ecx
+		lea esi, Memo[24]
+		mov[esi], eax //результат от деления в Memo[3]
 
-
-		//c*d + 23(ebx:ecx)+
-		mov eax, 0x17
-		mov edx, 0
-		add ecx, eax
-		adc ebx, edx
-		push ebx //h
-		push ecx //l
-		lea eax, tmp1
-		mov[eax], ebx
-		lea eax, tmp2
-		mov[eax], ecx
-
-		//a/2 (esi)+
-		mov edx, 0x1
-		mov eax, 0x56A735
-		mov edi, 2
-
-		//a/2 (esi)+
-		mov edx, 0x1
-		mov eax, 0x527D'27F2
-		mov edi, 0x2
-		div edi
-		mov esi, eax
-
-		//4*d (edi:esi)+
-		mov ecx, 0x4
-		mov eax, 0x87D272
-		mov ebx, 0x2
+		//d*4
+		lea esi, Memo[16]
+		mov eax, [esi] // eax = 128E'0F87
+		mov ecx, 4
 		mul ecx
-		mov esi, eax
-		mov edi, edx
-		mov eax, ebx
+		mov ebx, eax // ebx = 128E'0F87 * 4
+		mov eax, [esi + 4] // eax = 0x2
 		mul ecx
-		add edi, eax
+		lea esi, Memo[32]
+		mov[esi], ebx // заносим младшие разряды в Memo[4]
+		mov[esi + 4], eax // заносим старший разрял в Memo[4]
 
-		//4*d-a/2 + 1(edi:esi)+
-		mov edx, 0
-		sub esi, eax
-		sbb edi, edx
-		inc esi
-		sbb edi, edx
+		//a/2 - d*4 - 1
+		lea esi, Memo[24] // Memo[24] = Memo[3] = a/2 
+		mov eax, [esi]
+		lea esi, Memo[32] // Memo[32] = Memo[4] = d * 4
+		mov ebx, [esi]
+		sub eax, ebx //a/2 - d*4
+		dec eax // - 1
+		mov ecx, eax // результат переносим в ecx
+		mov eax, [esi + 4] 
+		neg eax // a/2 < d*4 ==> 0x1 - 0x2 = -0x1
+		lea esi, Memo[40]
+		mov[esi], eax // старшие разряды в Memo[5]
+		lea esi, Memo[48] 
+		mov[esi], ecx // младшие разряды в Memo[6]
 
-		//(c*d + 23)/(4*d-a/2 + 1) 
-		mov eax, 0
-		mov edx, 0
-		pop eax //l
-		pop edx //h
-		div esi
+		//c*d
+		lea esi, Memo[8]
+		mov eax, [esi]
+		mov ecx, 10h
+		div ecx
+		mov ebx, [esi + 4]
+		xchg eax, ebx
+		mov ecx, 10000000h
+		mul ecx
+		add eax, ebx
+		xchg eax, ebx
+		lea esi, Memo[16]
+		mov eax, [esi + 4]
+		mul ecx
+		mul ebx
+		mov ecx, 10h
+		xchg eax, edx
+		xchg edx, edi
+		mul ecx
+		mov ecx, 10000000h
+		xchg eax, edi
+		div ecx
+		add eax, edi
+		mov edi, eax
+		lea esi, Memo[16]
+		mov eax, [esi]
+		mul ebx
+		mov ebx, eax
+		xchg eax, edx
+		add eax, edi
+		mov ecx, 10h
+		mul ecx
+		xchg eax, ebx
+		mul ecx
+		add ebx, edx
+		xchg edx, ebx
+		lea esi, Memo[56]
+		mov[esi], edx
 
-		//(c*d + 23)/(4*d-a/2 + 1)*(-1)+
-		neg eax
+		//c*d + 23
+		mov ecx, 23
+		add eax, ecx
+		lea esi, Memo[64]
+		mov[esi], eax
 
-		lea ecx, memo
-		mov[ecx], eax
+		//(c*d + 23)/(a/2 - d*4 - 1)
+		lea esi, Memo[56]
+		mov eax, [esi]
+		lea esi, Memo[40]
+		mov ecx, [esi]
+		div ecx
+		dec eax
+		lea esi, Memo[72]
+		mov[esi], eax
+		lea esi, Memo[80]
+		mov[esi], edx
+
 
 		popad
 	}
-
-	std::cout << memo;
+	std::cout << Memo[80];
+	//for (int i = 0; i < DataSize; i++) 
+	//{
+	//	if ((i % 16) == 0) {
+	//		cout << "\n" << setw(2) << i / 16 << ":";
+	//	}
+	//	else {
+	//		cout << " " << setw(2) << IntToHex(Memo[i - 1]);
+	//	}
+	//}
+	_getch();
 	return 0;
 }
+
