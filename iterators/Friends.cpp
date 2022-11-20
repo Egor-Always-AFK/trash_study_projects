@@ -26,6 +26,13 @@ bool operator==(Friends &src1, Friends &src2)
     return false;
 }
 
+bool operator!=(Friends &src1, Friends &src2)
+{
+    if (src1.getName() != src2.getName())
+        return true;
+    return false;
+}
+
 std::ostream &operator<<(std::ostream &out, Friends &src)
 {
     out << "\n" << "Friend name: " << src._name;

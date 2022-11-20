@@ -21,4 +21,5 @@ class Friends
 };
 
 bool operator==(Friends &src1, Friends &src2);
+bool operator!=(Friends &src1, Friends &src2);
 #endif 
