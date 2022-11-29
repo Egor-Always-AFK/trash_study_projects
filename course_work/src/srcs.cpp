@@ -11,7 +11,7 @@ void menu()
 std::vector<AutoService> fileInput()
 {
 	std::string fileName;
-	std::cout << "Enter file name for file input.\n";
+	std::cout << "Enter file name for file input.\n>>";
 	std::cin >> fileName;
 	std::vector<AutoService> ret;
 	std::ifstream file;

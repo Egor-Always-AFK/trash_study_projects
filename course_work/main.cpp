@@ -8,12 +8,6 @@ int main()
 		std::cout << "Enter ur path:\n>>";
 		int choice;
 		std::cin >> choice;
-		// if (((choice < INPUT) && (choice > EXIT)))
-		// {
-		// 	std::cout << "Enter number(0 <= input <= 5)\n";
-		// }
-		// else
-		// {
 			switch (choice)
 			{
 			case INPUT:

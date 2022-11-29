@@ -19,5 +19,7 @@ void menu();
 
 std::vector<AutoService> fileInput();
 
+AutoService ft_split(const char *str);
+
 
 #endif

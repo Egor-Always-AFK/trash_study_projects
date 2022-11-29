@@ -4,7 +4,7 @@ CC = clang++
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = main.cpp src/AutoService.cpp src/srcs.cpp
+SRCS = main.cpp src/AutoService.cpp src/srcs.cpp src/parser.cpp
 
 HEAD = incl/AutoService.h incl/MainHeader.h
 
