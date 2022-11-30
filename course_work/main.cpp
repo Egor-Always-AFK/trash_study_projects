@@ -2,6 +2,7 @@
 
 int main()
 {
+	std::vector<AutoService> vec;
 	while (1)
 	{
 		menu();
@@ -14,15 +15,30 @@ int main()
 				
 				break;
 			case FILEINPUT:
-				fileInput();
+				vec	= fileInput();
 				break;
 
+			case FILEOUTPUT:
+
+				break;
+			case OUTPUT:
+			{
+				std::size_t i = 0;
+				std::vector<AutoService>::iterator vec_begin = vec.begin();
+				while (i != vec.size())
+				{
+					std::cout << *(vec_begin) << "\n";
+					i++;
+					vec_begin++;
+				}
+				break;
+			}
 			case SORT:
 
 				break;
 
 			case SEARCH:
-
+			
 				break;
 
 			case EDIT:

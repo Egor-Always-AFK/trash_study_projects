@@ -36,40 +36,84 @@ int *pars_date(const char *str)
 		}
 		int j = 0;
 		std::string tmps;
-		while (str[i] != '.')
+		while (str[i] != '.' && str[i] != ' ')
 		{
 			tmps.push_back(str[i]);
 			i++;
-			// std::cout << i << "\n
 		}
-		// std::cout << tmps << "\n";
-		j *= tmps.size();
 		j += std::atoi(tmps.c_str());
-		std::cout << j << "\n";
-		ret[2 - tmp] = j;
-		// std::cout << "suck my linux " << ret[2 - tmp] << tmp << std::endl;
+		ret[3 - tmp] = j;
 		tmp--;
 		i++;
 	}
 	if (check_date_validation(ret) == false)
 	{
-		std::cout << "Invalid file input. Use format: 0 < day < 31 && 0 < month < 12";
+		std::cout << "Invalid file input. Use format: 0 < day < 31 && 0 < month < 12.\n";
 		return nullptr;
 	}
-	// std::cout << "day: " << ret[0] << "\nmonth: " << ret[1] << "\nyear: " << ret[2] << "\n";
 	return ret;
 }
 
+
+std::string pars_number(const char *str)
+{
+	std::size_t i = 0;
+	while (str[i] != ' ')
+		i++;
+	i++;
+	std::string ret;
+	while (str[i] != ' ')
+	{
+		ret.push_back(str[i]);
+		i++;
+	}
+	return ret;
+}
+
+int pars_norm_hour(const char *str)
+{
+	std::size_t i = 0; 
+	std::size_t count = 0;
+	while (count < 2)
+	{
+		if (str[i] == ' ')
+			count++;
+		i++; 
+	}
+
+	std::string ret;
+	while (str[i])
+	{
+		ret.push_back(str[i]);
+		i++;
+	}
+	int norm_hour = std::atoi(ret.c_str());
+	if (norm_hour < 0)
+	{
+		std::cout << "Norm hour must be positive integer!\n";
+		return 0;
+	}
+	return norm_hour;
+}
+
+
 AutoService ft_split(const char *str)
 {
-	// std::cout << find_tokens(str);
+	int *date = nullptr;
+	std::string number;
+	int norm_hour;
 	if (find_tokens(str) != 3)
 		std::cout << "Invalid fileinput. Use example file.\n";
 	else
 	{
-		pars_date(str);
-		// int *date = pars_date(str);
+		date = pars_date(str);
+		number = pars_number(str);
+		norm_hour = pars_norm_hour(str);
 	}
 	AutoService ret;
+	if ((date != nullptr) && (number.size() != 0) && (norm_hour != 0))
+	{
+		ret = AutoService(date[0], date[1], date[2], number, norm_hour);
+	}
 	return ret;
 }

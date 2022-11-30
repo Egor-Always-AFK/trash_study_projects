@@ -46,3 +46,35 @@ void AutoService::setNormHour(int normHour)
 {
     _normHour = normHour;
 }
+
+int AutoService::getDataDay()
+{
+    return _dataDay;
+}
+
+int AutoService::getDataMonth()
+{
+    return _dataMonth;
+}
+
+int AutoService::getDataYear()
+{
+    return _dataYear;
+}
+
+std::string AutoService::getNumber()
+{
+    return _autoNumber;
+}
+
+int AutoService::getNormHour()
+{
+    return _normHour;
+}
+
+std::ostream &operator<<(std::ostream &out, AutoService &src)
+{
+    out << "Date: " << src._dataDay << '.' << src._dataMonth << '.' << src._dataYear << 
+    "\nNumber: " << src._autoNumber << "\nNorm hour: " << src._normHour << std::endl;
+    return (out);
+}
