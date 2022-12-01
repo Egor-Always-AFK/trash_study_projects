@@ -12,37 +12,48 @@ int main()
 			switch (choice)
 			{
 			case INPUT:
-				
+			{
+				if (vec.size() != 0)
+				{
+					std::vector<AutoService> tmp = manualInput();
+					vec = addVectorAtVector(vec, tmp);
+				}
+				else
+					vec = manualInput();
 				break;
+			}
 			case FILEINPUT:
-				vec	= fileInput();
+			{
+				if (vec.size() != 0)
+				{
+					std::vector<AutoService> tmp = fileInput();
+					vec = addVectorAtVector(vec, tmp);
+				}
+				else
+					vec	= fileInput();
 				break;
-
+			}
 			case FILEOUTPUT:
-
+				fileOutput(vec);
 				break;
 			case OUTPUT:
 			{
-				std::size_t i = 0;
-				std::vector<AutoService>::iterator vec_begin = vec.begin();
-				while (i != vec.size())
-				{
-					std::cout << *(vec_begin) << "\n";
-					i++;
-					vec_begin++;
-				}
+				if (vec.size() != 0)
+					output(vec);
+				else
+					std::cout << "Size of vector = 0\n";
 				break;
 			}
 			case SORT:
-
+				vec = sort(vec);
 				break;
 
 			case SEARCH:
-			
+				search(vec);
 				break;
 
 			case EDIT:
-
+				vec = edit(vec);
 				break;
 
 			case EXIT:
