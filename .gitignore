@@ -3,3 +3,4 @@ shared_ptr_Review/review
 *.json
 iterators/friends
 course_work/service
+*.out

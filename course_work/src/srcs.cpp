@@ -26,67 +26,21 @@ void fileOutput(std::vector<AutoService> vec)
 
 void search(std::vector<AutoService> vec)
 {
-	std::cout << "WIP\n" << DATE << " - date,\n" << NUMBER << " - number\n" << NORMHOUR << " - normhour\n"; 
-	int choise = 0;
-	std::cin >> choise;
+
+	int *date = new int[3];
+	std::cout << "Enter date:\n";
+	std::cin >> date[0] >> date[1] >> date[2];
+	int tmp = 0;
 	std::cout << "Search result:\n";
-	switch(choise)
+	for (std::vector<AutoService>::iterator vec_begin = vec.begin(); vec_begin != vec.end(); vec_begin++)
+	if ((*vec_begin).getDataDay() == date[0] && (*vec_begin).getDataMonth() == date[1] && (*vec_begin).getDataYear() == date[2])
 	{
-		case DATE:
-		{
-			int *date = new int[3];
-			std::cout << "Enter date:\n";
-			std::cin >> date[0] >> date[1] >> date[2];
-			int tmp = 0;
-			for (std::vector<AutoService>::iterator vec_begin = vec.begin(); vec_begin != vec.end(); vec_begin++)
-				if ((*vec_begin).getDataDay() == date[0] && (*vec_begin).getDataMonth() == date[1] && (*vec_begin).getDataYear() == date[2])
-				{
-					std::cout << '\n' << (*vec_begin) << std::endl;
-					tmp++;
-				}
-			if (tmp == 0)
-				std::cout << "Not found.\n";
-			delete [] date;
-			break;
-		}
-		case NUMBER:
-		{
-			std::string inp;
-			std::cout << "Enter number:\n>>";
-			std::cin >> inp;
-			int tmp = 0;
-			for (std::vector<AutoService>::iterator vec_begin = vec.begin(); vec_begin != vec.end(); vec_begin++)
-				if ((*vec_begin).getNumber() == inp)
-				{
-					std::cout << '\n' << (*vec_begin) << std::endl;
-					tmp++;
-				}
-			if (tmp == 0)
-				std::cout << "Not found.\n";
-			break;
-		}
-		case NORMHOUR:
-		{
-			int inp;
-			std::cout << "Enter normhour:\n>>";
-			std::cin >> inp;
-			int tmp = 0;
-			for (std::vector<AutoService>::iterator vec_begin = vec.begin(); vec_begin != vec.end(); vec_begin++)
-				if ((*vec_begin).getNormHour() == inp)
-				{
-					std::cout << '\n' << (*vec_begin) << std::endl;
-					tmp++;
-				}
-			if (tmp == 0)
-				std::cout << "Not found.\n";
-			break;
-		}
-		default:
-		{
-			std::cout << "try harder!\n";
-			break;
-		}
+		std::cout << '\n' << (*vec_begin) << std::endl;
+		tmp++;
 	}
+	if (tmp == 0)
+		std::cout << "Not found.\n";
+	delete [] date;
 }
 
 std::vector<AutoService> fileInput()
@@ -210,13 +164,13 @@ std::vector<AutoService> edit(std::vector<AutoService> vec)
 	int choise;
 	std::cin >> choise;
 	output(vec);
+	std::cout << "What date you wan't edit?(enter number of client).\n>>";
+	std::string tmp;
+	std::cin >> tmp;
 	switch (choise)
 	{
 		case DATE:
 		{
-			std::cout << "What date you wan't edit?(enter number of client).\n>>";
-			std::string tmp;
-			std::cin >> tmp;
 			std::vector<AutoService>::iterator vec_it = vec.begin();
 			for (std::vector<AutoService>::iterator vec_begin = vec.begin(); vec_begin != vec.end(); vec_begin++)
 			{
@@ -237,10 +191,38 @@ std::vector<AutoService> edit(std::vector<AutoService> vec)
 			break;
 		}
 		case NUMBER:
+		{
+
+			std::vector<AutoService>::iterator vec_it = vec.begin();
+			for (std::vector<AutoService>::iterator vec_begin = vec.begin(); vec_begin != vec.end(); vec_begin++)
+			{
+				if (tmp == (*vec_begin).getNumber())
+				{
+					std::string tmps;
+					std::cout << "Enter number:\n>>";
+					std::cin >> tmps;
+					(*vec_begin).setAutoNumber(tmps);
+				}
+			}
 			break;
+		}
 		case NORMHOUR:
+		{
+			std::vector<AutoService>::iterator vec_it = vec.begin();
+			for (std::vector<AutoService>::iterator vec_begin = vec.begin(); vec_begin != vec.end(); vec_begin++)
+			{
+				if (tmp == (*vec_begin).getNumber())
+				{
+					int tmpi;
+					std::cout << "Enter normhour:\n>>";
+					std::cin >> tmpi;
+					(*vec_begin).setNormHour(tmpi);
+				}
+			}
 			break;
+		}
 	default:
+		std::cout << "Try harder!\n";
 		break;
 	}
 	return vec;
