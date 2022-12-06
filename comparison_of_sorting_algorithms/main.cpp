@@ -1,88 +1,48 @@
-// #include "header.h"
-#include <iostream>
-#include <iomanip>
-#include <random>
+#include<iostream>
+#include<random>
+#include<chrono>
+#include "header.h"
 
-
-int quickSortOperations;
-// int quickSortOperations = 0;
-
-int bubbleSort(int *arr)
+int randomize() 
 {
-    int ret = 0;
-    for (std::size_t i = 0; i <= 1000; i++)
-    {
-        for (std::size_t j = i + 1; j <= 1000; j++)
-        {
-            if (arr[i] > arr[j])
-            {
-                std::swap(arr[i], arr[j]);
-                ret++;
-            }
-        }
-    }
-    return ret;
-}
-
-void quicksort(int *arr, int f, int l)
-{
-	// quickSortOperations = 0;
-	int first = f;
-	int last = l;
-	int mid = arr[(l + f)/ 2];
-    // std::cout << first << "\n\n" << last << "\n\n";
-	while (arr[first] < mid)   
-		first++;
-	while (arr[last] > mid)
-		last--;
-
-	if (first <= last)
-	{
-        std::swap(arr[first], arr[last]);
-		first++;
-		last--;
-	}
-
-	while (first < last)
-	{
-		if (f < last)
-			quicksort(arr, f, last);
-		if (first < l)
-			quicksort(arr, first, l);
-		quickSortOperations++;
-	}
-}
-
-uint16_t randomInt() {
-	std::random_device rd;     
-	std::mt19937 rng(rd());    
-	std::uniform_int_distribution<uint16_t> uni(-1000, 1000);
+	std::random_device rd;
+	std::mt19937 rng(rd());
+	std::uniform_int_distribution<int32_t> uni(0, 1024);
 
 	return uni(rng);
 }
 
-void printArr(int *arr)
-{
-    for (std::size_t i = 0; i < 1000; i++)
-        std::cout << arr[i] << " ";
-}
-
 int main()
 {
-    int arr[1000];
-    int array[1000];
-    for (std::size_t i = 0; i < 1000; i++)
-    {
-        arr[i] = randomInt();
-        array[i] = randomInt();
-    
-    }
-    // printArr(arr);
-    // std::cout << "\n\n";
-    int bubbleSortOperators = bubbleSort(arr);
-    quicksort(array, 0, 1000);
-    std::cout << "Operations in bubble sort: " << bubbleSortOperators << std::endl;
-    std::cout << "Operations in quick sort: " << quickSortOperations << std::endl;
-    // printArr(arr);
-    return 0;
+	const size_t arrSize = 1000;
+	int arr[arrSize] ={};
+	int forBuble[arrSize] = {};
+	int forHoar[arrSize] = {};
+	size_t bubleCounter = 0;
+	size_t hoarCounter = 0;
+
+	for(size_t i = 0; i < arrSize; i++)
+	{
+		arr[i] = randomize();
+		forBuble[i] = arr[i];
+		forHoar[i] = arr[i];
+	}
+
+	auto bubbleStart = std::chrono::steady_clock::now();
+	bubleSort(forBuble, bubleCounter, arrSize);
+	auto bubbleEnd = std::chrono::steady_clock::now();
+	auto bubbleTime = std::chrono::duration_cast<std::chrono::nanoseconds>(bubbleEnd - bubbleStart);
+
+	auto hoarStart = std::chrono::steady_clock::now();
+	hoare_sort(arrSize, forHoar, hoarCounter);
+	auto hoarEnd = std::chrono::steady_clock::now();
+	auto hoarTime = std::chrono::duration_cast<std::chrono::nanoseconds>(hoarEnd - hoarStart);
+	int timeProfit = bubbleTime.count()/hoarTime.count();
+	int iterationsProfit = bubleCounter/hoarCounter; 
+
+	std::cout << "\nBubble sort: " << (bubbleTime.count() * 0.000001) << " milliseconds " << bubleCounter << " iterations \n";
+	std::cout << "Hoare sort: " << (hoarTime.count() * 0.000001) << " milliseconds " << hoarCounter << " iterations \n";
+	std::cout << "Hoare coefficient profit:\ntime: " << timeProfit << "\niterations: " << iterationsProfit << std::endl;
+
+	return 0;
 }

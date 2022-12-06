@@ -5,10 +5,10 @@
 #include <random>
 
 
-int quickSortOperations;
+void hoare_sort(int size, int* array, size_t& count);
 
-int bubbleSort(int *arr);
+void sort_(int left, int right, int* arr, size_t& count);
 
-void quicksort(int *arr, int f, int l);
+void bubleSort(int* arr, size_t& bubleCounter, size_t arrSize);
 
 #endif

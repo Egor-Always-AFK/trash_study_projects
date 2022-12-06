@@ -1,31 +1,28 @@
 #include "header.h"
 
-void quicksort(int *arr, int f, int l)
+void sort_(int left, int right, int* arr, size_t& count)
 {
-	// quickSortOperations = 0;
-	int first = f;
-	int last = l;
-	int mid = arr[(l + f)/ 2];
-	while (arr[first] < arr[mid])
-		first++;
-	while (arr[last] > arr[mid])
-		last--;
-
-	if (first <= last)
-	{
-		int tmp = arr[first];
-		arr[first] = arr[last];
-		arr[last] = tmp;
-		first++;
-		last--;
-	}
-
-	while (first < last)
-	{
-		if (f < last)
-			quicksort(arr, f, last);
-		if (first < l)
-			quicksort(arr, first, l);
-		quickSortOperations++;
-	}
+	int i = left;
+	int j = right;
+	int support_element = arr[(i + j + 1) / 2];
+	do {
+		while (arr[i] < support_element) i++;
+		while (arr[j] > support_element) j--;
+		if (i <= j) {
+			std::swap(arr[i], arr[j]);
+			count++;
+			i++;
+			j--;
+		}
+	} while (i <= j);
+	if (left < j)
+		sort_(left, j, arr, count);
+	if (i < right)
+		sort_(i, right, arr, count);
 }
+
+void hoare_sort(int size, int* array, size_t& count)
+{
+	sort_(0, size - 1, array, count);
+}
+

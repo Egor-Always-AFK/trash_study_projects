@@ -4,8 +4,8 @@ CC = clang++
 
 CFLAGS = -Wall -Wextra -Werror -g
 
-# SRCS = hoares_algorithm.cpp bubble_sort.cpp main.cpp
-SRCS = main.cpp 
+SRCS = hoares_algorithm.cpp bubble_sort.cpp main.cpp
+# SRCS = main.cpp 
 
 HEAD = header.h
 
