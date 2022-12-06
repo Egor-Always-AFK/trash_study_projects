@@ -9,6 +9,8 @@ int main()
 		std::cout << "Enter ur path:\n>>";
 		int choice;
 		std::cin >> choice;
+		if (std::isdigit(choice) == 0)
+		{
 			switch (choice)
 			{
 			case INPUT:
@@ -62,6 +64,8 @@ int main()
 				std::cout << "hi i'm here\n";
 				break;
 			}
-		
+		}
+		else
+			std::cout << "Enter digit!\n";
 	}
 }

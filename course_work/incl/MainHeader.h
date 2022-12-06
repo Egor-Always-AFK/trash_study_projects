@@ -4,6 +4,7 @@
 #include "AutoService.h"
 #include <fstream>
 #include <string>
+#include <cctype>
 
 #define INPUT 0
 #define FILEINPUT 1

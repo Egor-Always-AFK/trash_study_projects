@@ -11,7 +11,10 @@ void menu()
 void fileOutput(std::vector<AutoService> vec)
 {
 	std::ofstream out;
-	out.open("out.txt");
+	std::string name;
+	std::cout << "Enter name of file:\n>>";
+	std::cin >> name;
+	out.open(name.c_str());
 	if (out.is_open())
 	{
 		for (std::vector<AutoService>::iterator vec_begin = vec.begin(); vec_begin != vec.end(); vec_begin++)
@@ -192,8 +195,6 @@ std::vector<AutoService> edit(std::vector<AutoService> vec)
 		}
 		case NUMBER:
 		{
-
-			std::vector<AutoService>::iterator vec_it = vec.begin();
 			for (std::vector<AutoService>::iterator vec_begin = vec.begin(); vec_begin != vec.end(); vec_begin++)
 			{
 				if (tmp == (*vec_begin).getNumber())
@@ -208,7 +209,6 @@ std::vector<AutoService> edit(std::vector<AutoService> vec)
 		}
 		case NORMHOUR:
 		{
-			std::vector<AutoService>::iterator vec_it = vec.begin();
 			for (std::vector<AutoService>::iterator vec_begin = vec.begin(); vec_begin != vec.end(); vec_begin++)
 			{
 				if (tmp == (*vec_begin).getNumber())
