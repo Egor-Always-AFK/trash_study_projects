@@ -8,17 +8,20 @@ SRCS = main.cpp src/AutoService.cpp src/srcs.cpp src/parser.cpp
 
 HEAD = incl/AutoService.h incl/MainHeader.h
 
-OBJS = $(SRCS:.c = .o)
+OBJS = $(SRCS:.cpp=.o)
 
 $(NAME) : $(OBJS) $(HEAD)
 		$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.c:%.o 
-	$(CC) -c $< -o $@
+%.o:%.cpp 
+	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
 
 clean: 
-	rm -rf $(NAME)
+	rm -rf $(OBJS)
 
-re: clean all
+fclean: clean
+		rm -rf $(NAME)
+
+re: fclean all

@@ -21,6 +21,8 @@
 
 typedef std::vector<void *> null_vector;
 
+int input();
+
 void menu();
 
 std::vector<AutoService> fileInput();

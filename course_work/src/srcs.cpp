@@ -8,6 +8,18 @@ void menu()
 		EDIT << " - for edit element,\n" << EXIT << " - for exit.\n";
 }
 
+int input()
+{
+	int value;
+	while (!(std::cin >> value))
+	{
+		std::cin.clear();
+		std::cin.ignore(1000, '\n');
+		std::cout << "Enter digit!\n>>";
+	}
+	return value;
+}
+
 void fileOutput(std::vector<AutoService> vec)
 {
 	std::ofstream out;
@@ -122,7 +134,7 @@ std::vector<AutoService> addVectorAtVector(std::vector<AutoService> dst, std::ve
 
 std::vector<AutoService> sort(std::vector<AutoService> vec)
 {
-std::cout << "WIP\n" << DATE << " - date,\n" << NUMBER << " - number\n" << NORMHOUR << " - normhour\n"; 
+std::cout << "Sort by\n" << DATE << " - date,\n" << NUMBER << " - number\n" << NORMHOUR << " - normhour\n"; 
 	int choise = 0;
 	std::cin >> choise;
 	std::cout << "Search result:\n";
@@ -238,4 +250,4 @@ void output(std::vector<AutoService> vec)
 		i++;
 		vec_begin++;
 	}
-}
+}	

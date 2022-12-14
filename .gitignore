@@ -4,3 +4,4 @@ shared_ptr_Review/review
 iterators/friends
 course_work/service
 *.out
+*.o
