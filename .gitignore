@@ -1,0 +1,12 @@
+BST/cmake-build-debug/.cmake
+.idea/*
+BST/src/cmake-build-debug/*
+BST/test/cmake-build-debug
+BST/test/CMakeCache.txt
+BST/test/CMakeFiles
+BST/test/Makefile
+BST/test/test_app
+BST/test/CTestTestfile.cmake
+BST/cmake-build-debug/*
+BST/.idea/*
+BST/test/cmake_install.cmake

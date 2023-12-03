@@ -41,15 +41,6 @@ TEST(Bst, InsertAndFindLongTest) {
     ASSERT_TRUE(tree.findNode(100L));
 }
 
-TEST(Bst, InsertAndFindStringTest) {
-    gadzainc_prod::BST<std::string> tree = gadzainc_prod::BST<std::string>();
-    tree.insertNode("idkMan");
-    tree.insertNode("gay");
-//    tree.insertNode("sex");
-//
-//    ASSERT_FALSE(tree.findNode("balls"));
-//    ASSERT_TRUE(tree.findNode("idkMan"));
-}
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest();
