@@ -26,7 +26,7 @@ namespace gadzainc_prod {
         bool find(gadzainc_utils::Node<T> *node) {
             if (root == nullptr) {
                 return false;
-            } else if (node->getValue() == root->getValue()) {
+            } else if (node->getValue()  == root->getValue()) {
                 return true;
             } else if (node->getValue() <= root->getValue()) {
                 find(root->left);

@@ -16,7 +16,7 @@ namespace gadzainc_utils {
         gadzainc_utils::Node<T> *left, *right, *parent;
 
         Node() = default;
-        Node(T value): right(nullptr), left(nullptr), parent(nullptr) {
+        explicit Node(T value): right(nullptr), left(nullptr), parent(nullptr) {
             this->value = value;
         }
         Node(T value,

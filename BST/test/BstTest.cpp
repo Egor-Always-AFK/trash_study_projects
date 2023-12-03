@@ -3,6 +3,7 @@
 //
 #include <gtest/gtest.h>
 #include "../src/BST.hpp"
+#include <string>
 
 TEST(BstTest, DefaultConstructorTestSuccess) {
     //give && when
@@ -38,6 +39,16 @@ TEST(Bst, InsertAndFindLongTest) {
     tree.insertNode(100L);
 
     ASSERT_TRUE(tree.findNode(100L));
+}
+
+TEST(Bst, InsertAndFindStringTest) {
+    gadzainc_prod::BST<std::string> tree = gadzainc_prod::BST<std::string>();
+    tree.insertNode("idkMan");
+    tree.insertNode("gay");
+//    tree.insertNode("sex");
+//
+//    ASSERT_FALSE(tree.findNode("balls"));
+//    ASSERT_TRUE(tree.findNode("idkMan"));
 }
 
 int main(int argc, char **argv) {
