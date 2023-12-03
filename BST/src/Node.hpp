@@ -9,9 +9,9 @@ namespace gadzainc_utils {
     template<typename T>
     class Node {
     private:
+    public:
         // value part
         T value;
-    public:
         // inheritance part
         gadzainc_utils::Node<T> *left, *right, *parent;
 
@@ -21,7 +21,7 @@ namespace gadzainc_utils {
         }
         Node(T value,
              gadzainc_utils::Node<T> *left,
-             gadzainc_utils::Node<T>* right,
+             gadzainc_utils::Node<T> *right,
              gadzainc_utils::Node<T> *parent): left(left), right(right), parent(parent) {
             this->value = value;
         };

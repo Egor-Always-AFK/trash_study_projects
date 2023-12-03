@@ -6,52 +6,54 @@
 #define REP_FOR_SMALL_PROJECTS_BST_HPP
 
 #include "Node.hpp"
+#include <iostream>
 
 namespace gadzainc_prod {
     template<typename T>
     class BST {
     private:
-        gadzainc_utils::Node<T> *root;
+        gadzainc_utils::Node<T> *root = nullptr;
 
-        void insert(gadzainc_utils::Node<T> *node) {
-            if (root == nullptr) {
-                root = new gadzainc_utils::Node<T>(node->getValue());
-            } else if (node->getValue() <= root->getValue()) {
-                insert(root->left);
+        void insert(gadzainc_utils::Node<T> *&dst, gadzainc_utils::Node<T> *src) {
+            if (!dst) {
+                dst = new gadzainc_utils::Node<T>(src->getValue());
+            } else if (src->value <= dst->value) {
+                insert(dst->left, src);
             } else {
-                insert(root->right);
+                insert(dst->right, src);
             }
         }
 
-        bool find(gadzainc_utils::Node<T> *node) {
-            if (root == nullptr) {
+        bool find(gadzainc_utils::Node<T> *dst, gadzainc_utils::Node<T> *src) {
+            if (!dst) {
                 return false;
-            } else if (node->getValue()  == root->getValue()) {
+            } else if (dst->getValue() == src->getValue()) {
                 return true;
-            } else if (node->getValue() <= root->getValue()) {
-                find(root->left);
+            } else if (src->getValue() <= dst->getValue()) {
+                find(dst->left, src);
             } else {
-                find(root->right);
+                find(dst->right, src);
             }
         }
     public:
         BST() = default;
+        ~BST() = default;
         explicit BST(gadzainc_utils::Node<T> node): root(node) {}
 
         void insertNode(gadzainc_utils::Node<T> node) {
-            insert(node);
+            insert(root, node);
         }
 
         void insertNode(T value) {
-            insert(new gadzainc_utils::Node<T>(value));
+            insert(root, new gadzainc_utils::Node<T>(value));
         }
 
         bool findNode(gadzainc_utils::Node<T> node) {
-            return find(node);
+            return find(root, node);
         }
 
         bool findNode(T value) {
-            return find(new gadzainc_utils::Node<T>(value));
+            return find(root, new gadzainc_utils::Node<T>(value));
         }
     };
 }

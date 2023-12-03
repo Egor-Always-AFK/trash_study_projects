@@ -14,10 +14,16 @@ TEST(BstTest, DefaultConstructorTestSuccess) {
 }
 
 TEST(BstTEst, InsertAndFindIntSuccessTest) {
+    //give
     gadzainc_prod::BST<int> tree = gadzainc_prod::BST<int>();
-    tree.insertNode(100);
 
+    //when
+    tree.insertNode(100);
+    tree.insertNode(0);
+
+    //then
     ASSERT_TRUE(tree.findNode(100));
+    ASSERT_TRUE(tree.findNode(0));
 }
 
 TEST(BstTest, InsertAndFindCharSuccessTest) {
