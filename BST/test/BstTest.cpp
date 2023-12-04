@@ -13,7 +13,7 @@ TEST(BstTest, DefaultConstructorTestSuccess) {
     ASSERT_FALSE(tree.findNode(0));
 }
 
-TEST(BstTEst, InsertAndFindIntSuccessTest) {
+TEST(BstTest, InsertAndFindIntSuccessTest) {
     //give
     gadzainc_prod::BST<int> tree = gadzainc_prod::BST<int>();
 
@@ -40,16 +40,9 @@ TEST(BstTest, InsertDoubleSuccessTest) {
     ASSERT_TRUE(tree.findNode(10.0));
 }
 
-TEST(Bst, InsertAndFindLongTest) {
+TEST(BstTest, InsertAndFindLongTest) {
     gadzainc_prod::BST<long> tree = gadzainc_prod::BST<long>();
     tree.insertNode(100L);
 
     ASSERT_TRUE(tree.findNode(100L));
-}
-
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest();
-
-    return RUN_ALL_TESTS();
 }

@@ -10,3 +10,12 @@ BST/test/CTestTestfile.cmake
 BST/cmake-build-debug/*
 BST/.idea/*
 BST/test/cmake_install.cmake
+*.json
+*.log
+BST/test/.cmake/api/v1/query/cache-v2
+BST/test/.cmake/api/v1/query/cmakeFiles-v1
+BST/test/.cmake/api/v1/query/codemodel-v2
+BST/test/.cmake/api/v1/query/toolchains-v1
+BST/test/cmake_install.cmake
+BST/test/CMakeLists.txt
+*.cmake
